@@ -15,8 +15,8 @@ public class RequestServiceImpl implements RequestService {
     RequestRepository repository;
 
     @Override
-    public void create(String ipAddress, String from, String[] destiny, String dateFrom, String dateTo, String currency, String status) {
-        Request request = new Request(ipAddress,from, destiny!=null?Arrays.toString(destiny):null,dateFrom,dateTo,currency,status);
+    public void create(String ipAddress, String from, String[] destiny, String dateFrom, String dateTo, String currency) {
+        Request request = new Request(ipAddress,from, destiny!=null?Arrays.toString(destiny):null,dateFrom,dateTo,currency);
         this.repository.create(request);
     }
 

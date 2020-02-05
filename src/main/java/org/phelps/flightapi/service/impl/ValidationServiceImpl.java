@@ -1,6 +1,7 @@
 package org.phelps.flightapi.service.impl;
 
 import org.phelps.flightapi.exception.ApiException;
+import org.phelps.flightapi.service.CurrencyService;
 import org.phelps.flightapi.service.IntegrationApiService;
 import org.phelps.flightapi.service.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class ValidationServiceImpl implements ValidationService {
 
     @Autowired
     IntegrationApiService integrationApiService;
+    @Autowired
+    CurrencyService currencyService;
 
     public void validateInputDate(String input) throws ApiException {
         if (input == null) {
@@ -24,8 +27,13 @@ public class ValidationServiceImpl implements ValidationService {
         if (input.length() != 10) {
             throw new ApiException("INPUT_DATE_INVALID_SIZE");
         }
+
         try{
             Date date = this.convertInputDate(input);
+
+            if(date.before(new Date())){
+                throw new ApiException("INPUT_DATE_IN_THE_PAST");
+            }
         }catch (ParseException e){
             throw new ApiException("INPUT_DATE_NOT_A_DATE");
         }
@@ -38,6 +46,8 @@ public class ValidationServiceImpl implements ValidationService {
         if (curr.length() != 3) {
             throw new ApiException("INPUT_CURRENCY_INVALID_SIZE");
         }
+        //check currency
+        this.currencyService.checkCurrency(curr);
     }
 
     public void validateLocation(String location) throws ApiException {
@@ -53,6 +63,6 @@ public class ValidationServiceImpl implements ValidationService {
 
     public Date convertInputDate(String date) throws ParseException {
         DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-        return (Date)formatter.parse(date);
+        return formatter.parse(date);
     }
 }

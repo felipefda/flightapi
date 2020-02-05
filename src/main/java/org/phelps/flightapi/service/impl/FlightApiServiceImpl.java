@@ -7,10 +7,12 @@ import org.phelps.flightapi.entity.skypicker.flight.FlightResult;
 import org.phelps.flightapi.exception.ApiException;
 import org.phelps.flightapi.service.FlightApiService;
 import org.phelps.flightapi.service.IntegrationApiService;
+import org.phelps.flightapi.service.RequestService;
 import org.phelps.flightapi.service.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,9 +24,11 @@ public class FlightApiServiceImpl implements FlightApiService {
     ValidationService validationService;
     @Autowired
     IntegrationApiService integrationApiService;
+    @Autowired
+    RequestService requestService;
 
     @Override
-    public List<AvgDest> getAverageFlight(String input_date_from, String input_date_to, String curr, String from, String[] dest) throws ApiException {
+    public List<AvgDest> getAverageFlight(HttpServletRequest request, String input_date_from, String input_date_to, String curr, String from, String[] dest) throws ApiException {
         if (input_date_from != null) {
             this.validationService.validateInputDate(input_date_from);
         }
@@ -64,6 +68,8 @@ public class FlightApiServiceImpl implements FlightApiService {
                 obj.setCode(row);
                 result.add(obj);
             }
+
+            this.requestService.create(request.getRemoteAddr(),from,dest,input_date_from,input_date_to,curr);
 
             return result;
 

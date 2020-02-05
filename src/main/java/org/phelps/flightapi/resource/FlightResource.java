@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -33,9 +34,10 @@ public class FlightResource {
             @ApiParam("Optional end date of flights") @RequestParam(value="dateTo", required = false) String dateTo,
             @ApiParam("Currency by EUR") @RequestParam(value="curr", required = true) String curr,
             @ApiParam("From location") @RequestParam(value="from", required = true) String from,
-            @ApiParam("List of destinations") @RequestParam(value="dest", required = true) String[] dest
+            @ApiParam("List of destinations") @RequestParam(value="dest", required = true) String[] dest,
+            HttpServletRequest request
             ) throws ApiException {
 
-        return this.flightApiService.getAverageFlight(dateFrom,dateTo,curr,from,dest);
+        return this.flightApiService.getAverageFlight(request,dateFrom,dateTo,curr,from,dest);
     }
 }

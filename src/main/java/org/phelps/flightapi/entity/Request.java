@@ -17,7 +17,6 @@ public class Request {
     private String dateFrom;
     private String dateTo;
     private String currency;
-    private String status;
 
     public Request(
             String ipAddress,
@@ -25,8 +24,7 @@ public class Request {
             String destiny,
             String dateFrom,
             String dateTo,
-            String currency,
-            String status){
+            String currency){
         super();
         this.ipAddress = ipAddress;
         this.from = from;
@@ -34,7 +32,6 @@ public class Request {
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.currency = currency;
-        this.status = status;
         this.createdOn = new java.sql.Date(Calendar.getInstance().getTime().getTime());
     }
 }

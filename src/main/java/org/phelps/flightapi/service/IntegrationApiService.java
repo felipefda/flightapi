@@ -7,5 +7,5 @@ import java.util.Date;
 
 public interface IntegrationApiService {
     FlightResult getQuotesFromSkyPicker(String flyFrom, String flyTo, Date dateFrom, Date dateTo, String curr ) throws ApiException;
-    boolean isLocation(String location);
+    boolean isLocation(String location) throws ApiException;
 }

@@ -27,8 +27,7 @@ public class JdbcRequestRepository implements RequestRepository {
             rs.getString("destiny"),
             rs.getString("date_from"),
             rs.getString("date_to"),
-            rs.getString("currency"),
-            rs.getString("status")
+            rs.getString("currency")
     );
     private final ResultSetExtractor<Request> extractor =
             (rs) -> rs.next() ? mapper.mapRow(rs, 1) : null;
@@ -44,8 +43,8 @@ public class JdbcRequestRepository implements RequestRepository {
 
         jdbcTemplate.update(connection -> {
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO request (created_on,ip_address,from,destiny,date_from,date_to,currency,status) " +
-                            "VALUES (?,?,?,?,?,?,?,?,?)",
+                    "INSERT INTO request (created_on,ip_address,from_code,destiny,date_from,date_to,currency) " +
+                            "VALUES (?,?,?,?,?,?,?)",
                     RETURN_GENERATED_KEYS
             );
 
@@ -56,7 +55,6 @@ public class JdbcRequestRepository implements RequestRepository {
             statement.setString(5, request.getDateFrom());
             statement.setString(6, request.getDateTo());
             statement.setString(7, request.getCurrency());
-            statement.setString(8, request.getStatus());
 
             return statement;
         }, generatedKeyHolder);
@@ -71,12 +69,11 @@ public class JdbcRequestRepository implements RequestRepository {
     @Override
     public void clearRequests() {
         jdbcTemplate.update(connection -> {
-            PreparedStatement statement = connection.prepareStatement(
+            return connection.prepareStatement(
                     "TRUNCATE request;"
 
             );
 
-            return statement;
         });
     }
 }
