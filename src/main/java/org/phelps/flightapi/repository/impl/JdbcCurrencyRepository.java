@@ -7,12 +7,14 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.util.List;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
+@Repository
 public class JdbcCurrencyRepository implements CurrencyRepository {
 
     private final JdbcTemplate jdbcTemplate;
@@ -58,7 +60,7 @@ public class JdbcCurrencyRepository implements CurrencyRepository {
 
     @Override
     public List<Currency> list() {
-        return jdbcTemplate.query("SELECT id, name FROM currency", mapper);
+        return jdbcTemplate.query("SELECT name FROM currency", mapper);
     }
 
     @Override

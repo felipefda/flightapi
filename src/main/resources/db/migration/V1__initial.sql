@@ -1,5 +1,6 @@
-create table REPORT (
+create table REQUEST (
     ID int not null,
+    CREATED_ON TIMESTAMP NOT NULL,
     IP_ADDRESS varchar(50) not null,
     FROM_CODE varchar(3) not null,
     DESTINY varchar(100) not null,
