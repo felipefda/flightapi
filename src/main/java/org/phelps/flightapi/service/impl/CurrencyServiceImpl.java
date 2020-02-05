@@ -7,6 +7,8 @@ import org.phelps.flightapi.service.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CurrencyServiceImpl implements CurrencyService {
     @Autowired
@@ -39,5 +41,10 @@ public class CurrencyServiceImpl implements CurrencyService {
             throw new ApiException("CURRENCY_NOT_FOUND");
         }
         this.repository.delete(name);
+    }
+
+    @Override
+    public List<Currency> list() {
+        return this.repository.list();
     }
 }

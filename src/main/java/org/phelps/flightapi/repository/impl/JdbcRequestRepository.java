@@ -1,6 +1,5 @@
 package org.phelps.flightapi.repository.impl;
 
-import org.phelps.flightapi.entity.Currency;
 import org.phelps.flightapi.entity.Request;
 import org.phelps.flightapi.repository.RequestRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,7 +21,7 @@ public class JdbcRequestRepository implements RequestRepository {
             rs.getLong("id"),
             rs.getDate("created_on"),
             rs.getString("ip_address"),
-            rs.getString("from"),
+            rs.getString("from_code"),
             rs.getString("destiny"),
             rs.getString("date_from"),
             rs.getString("date_to"),
